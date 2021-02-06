@@ -25,7 +25,7 @@ function Row(props) {
             <img
               key={movieObject.original_title || movieObject.original_name}
               style={{
-                maxHeight: props.isPoster ? "400px" : null,
+                maxHeight: props.isPoster ? "425px" : null,
               }}
               alt={movieObject.original_title || movieObject.original_name}
               src={

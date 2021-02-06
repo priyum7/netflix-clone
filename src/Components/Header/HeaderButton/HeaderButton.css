@@ -1,0 +1,15 @@
+button {
+  margin-right: 20px;
+  min-width: 120px;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0px;
+  border-radius: 4%;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}
