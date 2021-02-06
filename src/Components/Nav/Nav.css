@@ -1,0 +1,24 @@
+.Nav {
+  position: fixed;
+  height: 7vh;
+  z-index: 100;
+  width: 100%;
+  transition: all 500ms ease-in;
+}
+
+.Nav .Nav_logo {
+  position: relative;
+  left: 40px;
+  top: 8px;
+  object-fit: contain;
+  max-height: 6vh;
+}
+
+.Nav .Nav_icon {
+  position: fixed;
+  right: 45px;
+  top: 20px;
+  object-fit: contain;
+  max-height: 32px;
+  border-radius: 10%;
+}

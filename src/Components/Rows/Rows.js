@@ -1,10 +1,11 @@
 import React from "react";
 import Row from "./Row/Row";
 import requestUrls from "../../requests";
+import "./Rows.css";
 
 function Rows() {
   return (
-    <>
+    <div className="Rows">
       <Row
         title="NETFLIX ORIGINALS"
         getUrl={requestUrls.fetchNetflixOriginals}
@@ -45,7 +46,7 @@ function Rows() {
         getUrl={requestUrls.fetchDocumentaries}
         isPoster={false}
       />
-    </>
+    </div>
   );
 }
 

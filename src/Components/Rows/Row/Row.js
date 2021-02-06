@@ -4,7 +4,6 @@ import "./Row.css";
 
 function Row(props) {
   const [movieList, setMovieList] = useState([]);
-  console.log(movieList);
   const baseImgUrl = "https://image.tmdb.org/t/p/original";
 
   useEffect(() => {
@@ -24,8 +23,9 @@ function Row(props) {
         {movieList.map((movieObject) => {
           return (
             <img
+              key={movieObject.original_title || movieObject.original_name}
               style={{
-                maxHeight: props.isPoster ? "350px" : null,
+                maxHeight: props.isPoster ? "400px" : null,
               }}
               alt={movieObject.original_title || movieObject.original_name}
               src={
@@ -33,6 +33,11 @@ function Row(props) {
                   ? `${baseImgUrl}${movieObject.poster_path}`
                   : `${baseImgUrl}${movieObject.backdrop_path}`
               }
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src =
+                  "https://variety.com/wp-content/uploads/2020/05/netflix-logo.png";
+              }}
             ></img>
           );
         })}

@@ -7,6 +7,7 @@
   overflow-x: scroll;
   z-index: 1;
   overflow-y: hidden;
+  padding: 20px 0px;
 }
 
 .row_posters::-webkit-scrollbar {
@@ -16,13 +17,11 @@
 .row .row_posters img {
   max-height: 160px;
   object-fit: contain;
-  border-radius: 4%;
+  border-radius: 2%;
   margin-right: 5px;
   transition: transform 350ms;
-  /* padding: 20px 0px; */
 }
 
 .row .row_posters img:hover {
   transform: scale(1.2);
-  z-index: 99 !important;
 }
