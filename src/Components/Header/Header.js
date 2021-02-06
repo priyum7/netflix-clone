@@ -39,7 +39,14 @@ function Header() {
       }}
     >
       <Nav />
-      <HeaderInfo info={headerBack} />
+      {headerBack && (
+        <HeaderInfo
+          info={{
+            title: headerBack.original_title || headerBack.original_name,
+            description: headerBack.overview,
+          }}
+        />
+      )}
     </div>
   );
 }
