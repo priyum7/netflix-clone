@@ -48,12 +48,19 @@ function Poster(props) {
       }}
     >
       {delayFlag ? (
-        <div className="posterOnHover">
+        <div
+          className="posterOnHover"
+          style={{ backgroundImage: `url(${props.src})` }}
+        >
           <iframe
             style={{
-              height: "100%",
+              height: "80%",
             }}
-            src={`https://www.youtube.com/embed/` + trailerUrl + `?autoplay=1`}
+            src={
+              `https://www.youtube.com/embed/` +
+              trailerUrl +
+              `?autoplay=1&showinfo=0&controls=0`
+            }
             frameBorder="0"
           />
           <p>{props.movieName}</p>
