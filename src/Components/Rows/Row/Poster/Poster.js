@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import movieTrailer from "movie-trailer";
 import "./Poster.css";
-import YouTube from "react-youtube";
 
 function Poster(props) {
   const [delayFlag, setDelayFlag] = useState(false);
@@ -50,7 +49,6 @@ function Poster(props) {
     >
       {delayFlag ? (
         <div className="posterOnHover">
-          {/* <YouTube videoId={trailerUrl} opts={opts}></YouTube> */}
           <iframe
             style={{
               height: "100%",
