@@ -13,15 +13,3 @@
 .row_posters::-webkit-scrollbar {
   display: none;
 }
-
-.row .row_posters img {
-  max-height: 160px;
-  object-fit: contain;
-  border-radius: 2%;
-  margin-right: 5px;
-  transition: transform 350ms;
-}
-
-.row .row_posters img:hover {
-  transform: scale(1.2);
-}

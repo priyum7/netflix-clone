@@ -1,0 +1,23 @@
+.Poster {
+  margin-right: 4px;
+  display: inline-block;
+  transition: transform 350ms;
+}
+
+.Poster:hover {
+  transform: scale(1.2);
+}
+
+img {
+  max-height: 169px;
+  object-fit: contain;
+  border-radius: 2%;
+}
+
+.imgAsPoster {
+  max-height: 450px;
+}
+
+.posterOnHover {
+  height: 100%;
+}
