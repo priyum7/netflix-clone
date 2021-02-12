@@ -5,7 +5,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import HeaderButton from "../HeaderButton/HeaderButton";
 function HeaderInfo(props) {
   console.log(props.info);
-  const maxCharacters = 300;
+  const maxCharacters = 400;
   return (
     <div className="HeaderInfo">
       <h1>{props.info.title}</h1>
@@ -13,6 +13,12 @@ function HeaderInfo(props) {
       <p className="overview">
         {props.info.description.length < maxCharacters
           ? props.info.description
+          : props.info.description.search("\\.") > 0
+          ? `${props.info.description.slice(
+              0,
+              props.info.description.slice(0, maxCharacters).lastIndexOf(".") +
+                1
+            )} `
           : `${props.info.description.slice(0, maxCharacters)} ...`}
       </p>
       <div className="HeaderButtons">

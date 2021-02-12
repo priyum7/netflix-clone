@@ -6,10 +6,14 @@ function Poster(props) {
   const [delayFlag, setDelayFlag] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState("");
 
-  const mouseOverHandler = (movieName) => {
-    console.log(`${props.movieName}-Hover In`);
-    console.log(trailerUrl);
+  const setDelayflagTimeout = () => {
     if (trailerUrl) setDelayFlag(true);
+  };
+
+  let timeout;
+
+  const mouseOverHandler = (movieName) => {
+    timeout = setTimeout(setDelayflagTimeout, 800);
   };
 
   useEffect(() => {
@@ -20,7 +24,7 @@ function Poster(props) {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(`Cannot fetch ${props.movieName} trailer URL.`);
       });
   }, []);
 
@@ -30,21 +34,13 @@ function Poster(props) {
       "https://variety.com/wp-content/uploads/2020/05/netflix-logo.png";
   };
 
-  const opts = {
-    width: "300px",
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-    },
-  };
-
   return (
     <div
       className="Poster"
-      onMouseEnter={() => mouseOverHandler(props.movieName)}
+      onMouseOver={() => mouseOverHandler(props.movieName)}
       onMouseOut={() => {
+        clearTimeout(timeout);
         setDelayFlag(false);
-        console.log(`${props.movieName}-Hover Out-${delayFlag}`);
       }}
     >
       {delayFlag ? (
@@ -54,16 +50,16 @@ function Poster(props) {
         >
           <iframe
             style={{
-              height: "80%",
+              height: "100%",
             }}
             src={
               `https://www.youtube.com/embed/` +
               trailerUrl +
-              `?autoplay=1&showinfo=0&controls=0`
+              `?autoplay=1&mute=1&controls=0&loop=1`
             }
             frameBorder="0"
+            allow="autoplay"
           />
-          <p>{props.movieName}</p>
         </div>
       ) : (
         <img

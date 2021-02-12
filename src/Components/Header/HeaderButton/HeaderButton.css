@@ -1,13 +1,12 @@
 button {
-  margin-right: 20px;
-  min-width: 120px;
-  min-height: 30px;
+  margin-right: 10px;
+  padding: 3px 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 0px;
   border-radius: 4%;
-  cursor: pointer;
+  cursor: not-allowed;
 }
 
 button:hover {

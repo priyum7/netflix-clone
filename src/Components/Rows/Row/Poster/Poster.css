@@ -1,7 +1,7 @@
 .Poster {
   margin-right: 4px;
   display: inline-block;
-  transition: transform 350ms;
+  transition: transform 300ms;
 }
 
 .Poster:hover {
@@ -25,8 +25,4 @@ img {
   font-size: 1em;
   font-weight: bolder;
   background-size: cover;
-}
-
-.posterOnHover p {
-  margin-left: 5%;
 }
