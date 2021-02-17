@@ -7,9 +7,43 @@
   overflow-x: scroll;
   z-index: 1;
   overflow-y: hidden;
-  padding: 20px 0px;
+  padding: 20px 0px 0px 0px;
 }
 
 .row_posters::-webkit-scrollbar {
   display: none;
+}
+
+.movie_info {
+  display: flex;
+  box-sizing: border-box;
+  max-height: 350px;
+  min-height: 350px;
+}
+.description {
+  min-width: 40%;
+  padding-top: 20px;
+  padding-right: 80px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.9vw;
+}
+
+.media {
+  min-width: 50%;
+  max-width: 50%;
+}
+
+p {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.media img {
+  object-fit: cover;
+  max-height: 100%;
+  min-width: 100%;
 }

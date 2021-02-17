@@ -9,20 +9,12 @@
   border-radius: 2%;
 }
 
-img {
+.Poster img {
   max-height: 169px;
   object-fit: contain;
   border-radius: 2%;
 }
 
-.imgAsPoster {
+.Poster .imgAsPoster {
   max-height: 450px;
-}
-
-.posterOnHover {
-  height: 100%;
-  border-radius: 2%;
-  font-size: 1em;
-  font-weight: bolder;
-  background-size: cover;
 }

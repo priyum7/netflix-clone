@@ -3,29 +3,28 @@ import movieTrailer from "movie-trailer";
 import "./Poster.css";
 
 function Poster(props) {
-  const [delayFlag, setDelayFlag] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState("");
 
-  const setDelayflagTimeout = () => {
-    if (trailerUrl) setDelayFlag(true);
-  };
+  const baseImgUrl = "https://image.tmdb.org/t/p/original";
 
-  let timeout;
-
-  const mouseOverHandler = (movieName) => {
-    timeout = setTimeout(setDelayflagTimeout, 800);
-  };
+  const movieName =
+    props.movieObject.original_title || props.movieObject.original_name;
+  const posterpath = props.isPoster
+    ? `${baseImgUrl}${props.movieObject.poster_path}`
+    : `${baseImgUrl}${props.movieObject.backdrop_path}`;
 
   useEffect(() => {
-    movieTrailer(props.movieName)
-      .then((response) => {
-        if (response) {
-          setTrailerUrl(response.split("v=")[1].substring(0, 11));
-        }
-      })
-      .catch((error) => {
-        console.log(`Cannot fetch ${props.movieName} trailer URL.`);
-      });
+    if (!trailerUrl) {
+      movieTrailer(movieName)
+        .then((response) => {
+          if (response) {
+            setTrailerUrl(response.split("v=")[1].substring(0, 11));
+          }
+        })
+        .catch((error) => {
+          console.log(`Cannot fetch ${movieName} trailer URL.`);
+        });
+    }
   }, []);
 
   const errorHandler = (e) => {
@@ -37,38 +36,21 @@ function Poster(props) {
   return (
     <div
       className="Poster"
-      onMouseOver={() => mouseOverHandler(props.movieName)}
-      onMouseOut={() => {
-        clearTimeout(timeout);
-        setDelayFlag(false);
+      onClick={() => {
+        console.log(trailerUrl);
+        props.showMovieInfoOnClick({
+          ...props.movieObject,
+          trailerUrl: trailerUrl,
+          isPoster: props.isPoster,
+        });
       }}
     >
-      {delayFlag ? (
-        <div
-          className="posterOnHover"
-          style={{ backgroundImage: `url(${props.src})` }}
-        >
-          <iframe
-            style={{
-              height: "100%",
-            }}
-            src={
-              `https://www.youtube.com/embed/` +
-              trailerUrl +
-              `?autoplay=1&mute=1&controls=0&loop=1`
-            }
-            frameBorder="0"
-            allow="autoplay"
-          />
-        </div>
-      ) : (
-        <img
-          className={props.isPoster ? "imgAsPoster" : ""}
-          alt={props.movieName}
-          src={props.src}
-          onError={errorHandler}
-        />
-      )}
+      <img
+        className={props.isPoster ? "imgAsPoster" : ""}
+        alt={movieName}
+        src={posterpath}
+        onError={errorHandler}
+      />
     </div>
   );
 }
