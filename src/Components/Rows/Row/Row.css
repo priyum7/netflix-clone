@@ -7,7 +7,7 @@
   overflow-x: scroll;
   z-index: 1;
   overflow-y: hidden;
-  padding: 1.5vw 0px;
+  padding: 1.5vw 0px 0.5vw 0px;
   box-sizing: border-box;
 }
 
@@ -28,9 +28,13 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.description h1 {
+  font-size: 1.8rem;
+}
+
 .title {
   font-weight: bold;
-  font-size: 1.9vw;
+  font-size: 1.8rem;
 }
 
 .media {
@@ -38,16 +42,13 @@
   max-width: 50%;
 }
 
-.media p {
+.overview {
   margin-top: 2rem;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .media img {
   object-fit: cover;
   max-height: 100%;
   min-width: 100%;
-}
-
-.media iframe {
 }

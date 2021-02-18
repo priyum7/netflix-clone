@@ -1,6 +1,6 @@
 .Nav {
   position: fixed;
-  height: 7vh;
+  height: 3.5vw;
   z-index: 100;
   width: 100%;
   transition: all 500ms ease-in;
@@ -9,16 +9,16 @@
 .Nav .Nav_logo {
   position: relative;
   margin-left: 3vw;
-  top: 8px;
+  top: 0.8vw;
   object-fit: contain;
   max-height: 3.5rem;
 }
 
 .Nav .Nav_icon {
   position: fixed;
-  right: 45px;
-  top: 20px;
+  right: 3vw;
+  top: 1.2vw;
   object-fit: contain;
-  max-height: 32px;
+  max-height: 2.3rem;
   border-radius: 10%;
 }
