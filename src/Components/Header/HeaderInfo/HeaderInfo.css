@@ -1,17 +1,17 @@
 .HeaderInfo {
-  margin-left: 40px;
+  margin-left: 3vw;
   position: relative;
-  top: 30vh;
+  top: 15vw;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   max-width: 40%;
 }
 
 .HeaderInfo h1 {
-  font-size: 55px;
+  font-size: 3rem;
 }
 
 .HeaderInfo .overview {
-  font-size: 1.4vw;
+  font-size: 1.5rem;
   font-weight: 400;
   text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
 }

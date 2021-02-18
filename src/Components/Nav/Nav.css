@@ -8,10 +8,10 @@
 
 .Nav .Nav_logo {
   position: relative;
-  left: 40px;
+  margin-left: 3vw;
   top: 8px;
   object-fit: contain;
-  max-height: 6vh;
+  max-height: 3.5rem;
 }
 
 .Nav .Nav_icon {

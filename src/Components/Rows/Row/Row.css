@@ -7,7 +7,8 @@
   overflow-x: scroll;
   z-index: 1;
   overflow-y: hidden;
-  padding: 20px 0px 0px 0px;
+  padding: 1.5vw 0px;
+  box-sizing: border-box;
 }
 
 .row_posters::-webkit-scrollbar {
@@ -37,8 +38,8 @@
   max-width: 50%;
 }
 
-p {
-  margin-top: 20px;
+.media p {
+  margin-top: 2rem;
   font-size: 20px;
 }
 
@@ -46,4 +47,7 @@ p {
   object-fit: cover;
   max-height: 100%;
   min-width: 100%;
+}
+
+.media iframe {
 }

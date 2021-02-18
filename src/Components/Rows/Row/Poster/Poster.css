@@ -10,11 +10,11 @@
 }
 
 .Poster img {
-  max-height: 169px;
+  max-height: 9.4vw;
   object-fit: contain;
   border-radius: 2%;
 }
 
 .Poster .imgAsPoster {
-  max-height: 450px;
+  max-height: 25vw;
 }
