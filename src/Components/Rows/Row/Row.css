@@ -19,9 +19,10 @@
   display: flex;
   box-sizing: border-box;
   height: 28vw;
+  justify-content: space-between;
 }
 .description {
-  min-width: 40%;
+  max-width: 40%;
   padding-top: 20px;
   padding-right: 80px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -37,7 +38,8 @@
 }
 
 .media {
-  max-width: 50%;
+  width: 50%;
+  margin-right: 3vw;
 }
 
 .overview {
