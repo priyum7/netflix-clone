@@ -45,57 +45,64 @@ function Row(props) {
           );
         })}
       </div>
-      {movieProfileObject && (
-        <div className="movie_info">
-          <div className="description">
-            <h1>
-              {movieProfileObject.original_title ||
-                movieProfileObject.original_name}
-            </h1>
-            <p className="overview">
-              {movieProfileObject.overview.length < maxCharacters
-                ? movieProfileObject.overview
-                : movieProfileObject.overview.search("\\.") > 0
-                ? `${movieProfileObject.overview.slice(
-                    0,
-                    movieProfileObject.overview
-                      .slice(0, maxCharacters)
-                      .lastIndexOf(".") + 1
-                  )} `
-                : `${movieProfileObject.description.slice(
-                    0,
-                    maxCharacters
-                  )} ...`}
-            </p>
-          </div>
-          <div className="media">
-            {movieProfileObject.trailerUrl ? (
-              <iframe
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
-                src={
-                  `https://www.youtube.com/embed/` +
-                  movieProfileObject.trailerUrl +
-                  `?autoplay=1&mute=1&controls=0&loop=1`
-                }
-                frameBorder="0"
-                allow="autoplay"
-              />
-            ) : (
-              <img
-                alt={
-                  movieProfileObject.original_title ||
-                  movieProfileObject.original_name
-                }
-                src={`${baseImgUrl}${movieProfileObject.backdrop_path}`}
-                onError={errorHandler}
-              />
-            )}
-          </div>
-        </div>
-      )}
+      <div
+        className="movie_info"
+        style={{
+          height: movieProfileObject ? null : "0vw",
+        }}
+      >
+        {movieProfileObject && (
+          <>
+            <div className="description">
+              <h1>
+                {movieProfileObject.original_title ||
+                  movieProfileObject.original_name}
+              </h1>
+              <p className="overview">
+                {movieProfileObject.overview.length < maxCharacters
+                  ? movieProfileObject.overview
+                  : movieProfileObject.overview.search("\\.") > 0
+                  ? `${movieProfileObject.overview.slice(
+                      0,
+                      movieProfileObject.overview
+                        .slice(0, maxCharacters)
+                        .lastIndexOf(".") + 1
+                    )} `
+                  : `${movieProfileObject.description.slice(
+                      0,
+                      maxCharacters
+                    )} ...`}
+              </p>
+            </div>
+            <div className="media">
+              {movieProfileObject.trailerUrl ? (
+                <iframe
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                  }}
+                  src={
+                    `https://www.youtube.com/embed/` +
+                    movieProfileObject.trailerUrl +
+                    `?autoplay=1&mute=1&controls=0&loop=1`
+                  }
+                  frameBorder="0"
+                  allow="autoplay"
+                />
+              ) : (
+                <img
+                  alt={
+                    movieProfileObject.original_title ||
+                    movieProfileObject.original_name
+                  }
+                  src={`${baseImgUrl}${movieProfileObject.backdrop_path}`}
+                  onError={errorHandler}
+                />
+              )}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

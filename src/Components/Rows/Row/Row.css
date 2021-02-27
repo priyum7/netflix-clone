@@ -20,6 +20,7 @@
   box-sizing: border-box;
   height: 28vw;
   justify-content: space-between;
+  transition: all 0.6s linear;
 }
 .description {
   max-width: 40%;
