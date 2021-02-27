@@ -11,7 +11,9 @@ function Row(props) {
 
   const showMovieInfo = (tempMovieObject) => {
     console.log(tempMovieObject);
+
     setMovieProfileObject(tempMovieObject);
+    props.activeRowChangeHandler(props.title);
   };
 
   useEffect(() => {
@@ -48,10 +50,10 @@ function Row(props) {
       <div
         className="movie_info"
         style={{
-          height: movieProfileObject ? null : "0vw",
+          height: props.currentActiveRow == props.title ? null : "0vw",
         }}
       >
-        {movieProfileObject && (
+        {props.currentActiveRow == props.title && (
           <>
             <div className="description">
               <h1>
