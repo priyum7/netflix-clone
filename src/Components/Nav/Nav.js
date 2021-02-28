@@ -26,7 +26,10 @@ function Nav() {
   return (
     <div
       className="Nav"
-      style={{ backgroundColor: scrollFlag ? "#141414" : null }}
+      style={{
+        backgroundColor: scrollFlag ? "#141414" : null,
+        opacity: "0.85",
+      }}
     >
       <img className="Nav_logo" src={NetflixLogo} alt="Netflix logo" />
       <img

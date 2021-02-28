@@ -22,3 +22,17 @@
   max-height: 2.3rem;
   border-radius: 10%;
 }
+
+@media only screen and (max-width: 768px) {
+  .Nav .Nav_logo {
+    max-height: 7vh;
+    top: 0vw;
+  }
+  .Nav .Nav_icon {
+    max-height: 4vh;
+    top: 1.5vh;
+  }
+  .Nav {
+    height: 6vh;
+  }
+}

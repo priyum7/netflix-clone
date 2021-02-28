@@ -18,3 +18,12 @@
 .Poster .imgAsPoster {
   max-height: 24vw;
 }
+
+@media only screen and (max-width: 768px) {
+  .Poster .imgAsPoster {
+    max-height: 35vh;
+  }
+  .Poster img {
+    max-height: 15vh;
+  }
+}
