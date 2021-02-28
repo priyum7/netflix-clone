@@ -20,3 +20,9 @@
   margin-top: 3%;
   display: flex;
 }
+
+@media only screen and (max-width: 768px) {
+  .HeaderInfo {
+    display: none;
+  }
+}

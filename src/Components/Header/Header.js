@@ -26,9 +26,13 @@ function Header() {
     getRandomBackground();
   }, []);
 
+  console.log(headerBack);
+
   const backgroundPath =
     headerBack != null
-      ? `url("${baseImgUrl}${headerBack.backdrop_path}")`
+      ? window.innerWidth <= 768
+        ? `url("${baseImgUrl}${headerBack.poster_path}")`
+        : `url("${baseImgUrl}${headerBack.backdrop_path}")`
       : null;
 
   return (

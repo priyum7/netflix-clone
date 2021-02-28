@@ -4,7 +4,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import HeaderButton from "../HeaderButton/HeaderButton";
 function HeaderInfo(props) {
-  const maxCharacters = 300;
+  const maxCharacters = 250;
   return (
     <div className="HeaderInfo">
       <h1>{props.info.title}</h1>
