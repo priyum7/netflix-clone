@@ -16,6 +16,7 @@
 }
 
 .movie_info {
+  position: relative;
   display: flex;
   box-sizing: border-box;
   height: 28vw;
@@ -52,4 +53,29 @@
   object-fit: cover;
   height: 100%;
   width: 100%;
+}
+
+.mobile_info {
+  transition: all 0.6s ease-in-out;
+  position: fixed;
+  display: flex;
+  flex-flow: column-reverse;
+  top: 0vh;
+  left: 0vw;
+  z-index: 100;
+  width: 100%;
+  min-width: 100vw;
+
+  transform: translateY(300vh);
+  margin: 0%;
+}
+
+.mobile_info .info {
+  background: #2b2b2b;
+  height: 100%;
+  width: 100%;
+  min-width: 100vw;
+  max-height: 50vh;
+  border-radius: 5% 5% 0% 0%;
+  cursor: none;
 }

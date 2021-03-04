@@ -51,6 +51,7 @@ function Row(props) {
         className="movie_info"
         style={{
           height: props.currentActiveRow == props.title ? null : "0vw",
+          display: window.innerWidth <= 768 ? "none" : null,
         }}
       >
         {props.currentActiveRow == props.title && (
@@ -104,6 +105,29 @@ function Row(props) {
             </div>
           </>
         )}
+      </div>
+
+      <div
+        className="mobile_info"
+        style={{
+          display: window.innerWidth <= 768 ? "flex" : null,
+          minHeight: props.currentActiveRow == props.title ? "100vh" : "0vh",
+          height: props.currentActiveRow == props.title ? "100%" : "0%",
+          transform:
+            props.currentActiveRow == props.title
+              ? "translateY(0vh)"
+              : "translateY(300vh)",
+        }}
+        onClick={() => {
+          props.activeRowChangeHandler(null);
+        }}
+      >
+        <div
+          className="info"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        ></div>
       </div>
     </div>
   );
