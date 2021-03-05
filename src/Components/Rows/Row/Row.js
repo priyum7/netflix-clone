@@ -110,7 +110,6 @@ function Row(props) {
       <div
         className="mobile_info"
         style={{
-          display: window.innerWidth <= 768 ? "flex" : null,
           minHeight: props.currentActiveRow == props.title ? "100vh" : "0vh",
           height: props.currentActiveRow == props.title ? "100%" : "0%",
           transform:
@@ -123,11 +122,35 @@ function Row(props) {
         }}
       >
         <div
-          className="info"
+          className="mobile_info_main"
           onClick={(e) => {
             e.stopPropagation();
           }}
-        ></div>
+        >
+          <div className="mobile_description">
+            <img
+              src={`${baseImgUrl}${movieProfileObject.poster_path}`}
+              style={{ maxHeight: "20vh", boxSizing: "fill" }}
+            />
+            <p style={{ paddingLeft: "2vw", fontSize: "3vw" }}>
+              {movieProfileObject.overview}
+            </p>
+          </div>
+          <iframe
+            style={{
+              maxHeight: "30vh",
+              width: "100%",
+              height: "100%",
+            }}
+            src={
+              `https://www.youtube.com/embed/` +
+              movieProfileObject.trailerUrl +
+              `?autoplay=1&mute=1&controls=0&loop=1`
+            }
+            frameBorder="0"
+            allow="autoplay"
+          />
+        </div>
       </div>
     </div>
   );
