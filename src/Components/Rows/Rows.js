@@ -14,19 +14,21 @@ function Rows() {
   return (
     <div className="Rows">
       <Row
-        title="NETFLIX ORIGINALS"
-        getUrl={requestUrls.fetchNetflixOriginals}
-        isPoster={true}
-        currentActiveRow={activeRow}
-        activeRowChangeHandler={setCurrentActiveRow}
-      />
-      <Row
         title="Trending Now"
         getUrl={requestUrls.fetchTrending}
         isPoster={false}
         currentActiveRow={activeRow}
         activeRowChangeHandler={setCurrentActiveRow}
       />
+
+      <Row
+        title="NETFLIX ORIGINALS"
+        getUrl={requestUrls.fetchNetflixOriginals}
+        isPoster={true}
+        currentActiveRow={activeRow}
+        activeRowChangeHandler={setCurrentActiveRow}
+      />
+
       <Row
         title="Top Rated"
         getUrl={requestUrls.fetchTopRated}

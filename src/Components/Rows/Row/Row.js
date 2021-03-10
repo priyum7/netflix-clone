@@ -6,7 +6,7 @@ import Poster from "./Poster/Poster";
 function Row(props) {
   const [movieList, setMovieList] = useState([]);
   const [movieProfileObject, setMovieProfileObject] = useState(false);
-  const maxCharacters = 400;
+  const maxCharacters = 380;
   const baseImgUrl = "https://image.tmdb.org/t/p/original";
 
   const showMovieInfo = (tempMovieObject) => {
@@ -71,7 +71,7 @@ function Row(props) {
                         .slice(0, maxCharacters)
                         .lastIndexOf(".") + 1
                     )} `
-                  : `${movieProfileObject.description.slice(
+                  : `${movieProfileObject.overview.slice(
                       0,
                       maxCharacters
                     )} ...`}
@@ -129,23 +129,38 @@ function Row(props) {
         >
           <div className="mobile_description">
             <img
-              src={`${baseImgUrl}${movieProfileObject.poster_path}`}
+              src={
+                movieProfileObject.poster_path
+                  ? `${baseImgUrl}${movieProfileObject.poster_path}`
+                  : "https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg"
+              }
               style={{ maxHeight: "20vh", boxSizing: "fill" }}
             />
-            <p style={{ paddingLeft: "2vw", fontSize: "3vw" }}>
-              {movieProfileObject.overview}
-            </p>
+            {movieProfileObject && (
+              <p style={{ paddingLeft: "2vw", fontSize: "3vw" }}>
+                {movieProfileObject.overview.length < maxCharacters
+                  ? movieProfileObject.overview
+                  : `${movieProfileObject.overview.slice(
+                      0,
+                      maxCharacters
+                    )} ...`}
+              </p>
+            )}
           </div>
           <iframe
             style={{
-              maxHeight: "30vh",
+              maxHeight: "26vh",
               width: "100%",
               height: "100%",
             }}
             src={
-              `https://www.youtube.com/embed/` +
-              movieProfileObject.trailerUrl +
-              `?autoplay=1&mute=1&controls=0&loop=1`
+              movieProfileObject.trailerUrl
+                ? `https://www.youtube.com/embed/` +
+                  movieProfileObject.trailerUrl +
+                  `?autoplay=1&mute=1&controls=0&playsinline=1`
+                : `https://www.youtube.com/embed/` +
+                  "_vECE5BJbA0" +
+                  `?autoplay=1&mute=1&controls=0&playsinline=1`
             }
             frameBorder="0"
             allow="autoplay"
