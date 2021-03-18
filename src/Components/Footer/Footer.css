@@ -1,13 +1,25 @@
 :root {
-  --size: 2rem;
+  --size: 2.5rem;
 }
 
 .footer {
+  text-align: center;
+  font-family: "Libre Baskerville", serif;
 }
 
-.footer p {
-  text-align: center;
+.icon_row {
   font-size: var(--size);
+}
+
+.contact_me {
+  font-family: "Dosis", sans-serif;
+  font-size: calc(var(--size) * 0.85);
+  margin-bottom: 1vw;
+}
+
+.contact_icons {
+  max-height: calc(var(--size) * 0.85);
+  max-width: 2.5vw;
 }
 
 .footer .react_icon {
@@ -18,7 +30,7 @@
 
 .footer .heart_icon {
   font-size: var(--size);
-  animation: heartbeat 2s linear;
+  animation: heartbeat 1.5s linear;
   animation-iteration-count: infinite;
 }
 
@@ -38,6 +50,7 @@
 
   50% {
     transform: scale(1.1);
+    opacity: 0.5;
   }
   100% {
     transform: scale(1.3);

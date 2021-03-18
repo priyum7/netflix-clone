@@ -26,10 +26,16 @@ function Row(props) {
     getMovies();
   }, [props.getUrl]);
 
-  const errorHandler = (e) => {
+  const errorHandlerLandscape = (e) => {
     e.target.onerror = null;
     e.target.src =
       "https://variety.com/wp-content/uploads/2020/05/netflix-logo.png";
+  };
+
+  const errorHandlerPotrait = (e) => {
+    e.target.onerror = null;
+    e.target.src =
+      "https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg";
   };
 
   return (
@@ -99,7 +105,7 @@ function Row(props) {
                     movieProfileObject.original_name
                   }
                   src={`${baseImgUrl}${movieProfileObject.backdrop_path}`}
-                  onError={errorHandler}
+                  onError={errorHandlerLandscape}
                 />
               )}
             </div>
@@ -129,11 +135,8 @@ function Row(props) {
         >
           <div className="mobile_description">
             <img
-              src={
-                movieProfileObject.poster_path
-                  ? `${baseImgUrl}${movieProfileObject.poster_path}`
-                  : "https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg"
-              }
+              src={`${baseImgUrl}${movieProfileObject.poster_path}`}
+              onerror={errorHandlerPotrait}
               style={{ maxHeight: "20vh", boxSizing: "fill" }}
             />
             {movieProfileObject && (
