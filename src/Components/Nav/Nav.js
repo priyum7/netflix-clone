@@ -5,12 +5,17 @@ import NetflixLogo from "../../Netflix-Logo-PNG3.png";
 function Nav() {
   const [scrollFlag, setScrollFlag] = useState(false);
 
+  const minDimension =
+    (window.innerHeight -
+      window.innerHeight * (1 - window.innerWidth / window.screen.width)) *
+    0.9;
+
   const scrollEvent = () => {
-    if (window.pageYOffset < 780) {
+    if (window.pageYOffset < minDimension) {
       setScrollFlag(false);
     }
 
-    if (window.pageYOffset > 780) {
+    if (window.pageYOffset > minDimension) {
       setScrollFlag(true);
     }
   };

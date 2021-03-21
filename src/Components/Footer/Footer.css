@@ -19,7 +19,7 @@
 
 .contact_icons {
   max-height: calc(var(--size) * 0.85);
-  max-width: 2.5vw;
+  max-width: calc(var(--size) * 1.15);
 }
 
 .footer .react_icon {

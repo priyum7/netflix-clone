@@ -4,6 +4,7 @@ import "./Row.css";
 import Poster from "./Poster/Poster";
 
 function Row(props) {
+  const mobileMoviePoster = useRef();
   const [movieList, setMovieList] = useState([]);
   const [movieProfileObject, setMovieProfileObject] = useState(false);
   const maxCharacters = 380;
@@ -36,6 +37,20 @@ function Row(props) {
     e.target.onerror = null;
     e.target.src =
       "https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg";
+  };
+
+  const sliceMovieDescription = (MovieDescription) => {
+    return MovieDescription.length < maxCharacters
+      ? MovieDescription
+      : MovieDescription.search("\\.") < maxCharacters
+      ? `${MovieDescription.slice(
+          0,
+          MovieDescription.slice(0, maxCharacters).lastIndexOf(".") + 1
+        )} `
+      : `${MovieDescription.slice(
+          0,
+          MovieDescription.slice(0, maxCharacters).lastIndexOf(" ") + 1
+        )}...`;
   };
 
   return (
@@ -116,12 +131,12 @@ function Row(props) {
       <div
         className="mobile_info"
         style={{
-          minHeight: props.currentActiveRow == props.title ? "100vh" : "0vh",
-          height: props.currentActiveRow == props.title ? "100%" : "0%",
           transform:
             props.currentActiveRow == props.title
               ? "translateY(0vh)"
-              : "translateY(300vh)",
+              : "translateY(200vh)",
+          minHeight: "100vh",
+          height: "100%",
         }}
         onClick={() => {
           props.activeRowChangeHandler(null);
@@ -136,17 +151,18 @@ function Row(props) {
           <div className="mobile_description">
             <img
               src={`${baseImgUrl}${movieProfileObject.poster_path}`}
-              onerror={errorHandlerPotrait}
-              style={{ maxHeight: "20vh", boxSizing: "fill" }}
+              onError={errorHandlerPotrait}
+              style={{
+                maxHeight: "20vh",
+                boxSizing: "fill",
+              }}
+              ref={mobileMoviePoster}
             />
             {movieProfileObject && (
-              <p style={{ paddingLeft: "2vw", fontSize: "3vw" }}>
-                {movieProfileObject.overview.length < maxCharacters
-                  ? movieProfileObject.overview
-                  : `${movieProfileObject.overview.slice(
-                      0,
-                      maxCharacters
-                    )} ...`}
+              <p style={{ paddingLeft: "2vw", fontSize: "3.1vw" }}>
+                {"description" in movieProfileObject
+                  ? sliceMovieDescription(movieProfileObject.description)
+                  : sliceMovieDescription(movieProfileObject.overview)}
               </p>
             )}
           </div>

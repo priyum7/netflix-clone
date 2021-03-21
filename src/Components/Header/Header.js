@@ -39,7 +39,7 @@ function Header() {
     <div
       className="header"
       style={{
-        backgroundImage: backgroundPath,
+        backgroundImage: `linear-gradient(to top, #141414 5% , transparent 30%), ${backgroundPath}`,
       }}
     >
       <Nav />
