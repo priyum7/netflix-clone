@@ -4,27 +4,37 @@ import NetflixLogo from "../../Netflix-Logo-PNG3.png";
 
 function Nav() {
   const [scrollFlag, setScrollFlag] = useState(false);
+  const [minScrollLength, setMinScrollLength] = useState(calcMinScrollLength());
 
-  const minDimension =
-    (window.innerHeight -
-      window.innerHeight * (1 - window.innerWidth / window.screen.width)) *
-    0.9;
+  function calcMinScrollLength() {
+    return (
+      (window.innerHeight -
+        window.innerHeight * (1 - window.innerWidth / window.screen.width)) *
+      0.85
+    );
+  }
 
   const scrollEvent = () => {
-    if (window.pageYOffset < minDimension) {
+    if (window.pageYOffset < minScrollLength) {
       setScrollFlag(false);
     }
 
-    if (window.pageYOffset > minDimension) {
+    if (window.pageYOffset > minScrollLength) {
       setScrollFlag(true);
     }
   };
 
   useEffect(() => {
+    calcMinScrollLength();
     window.addEventListener("scroll", scrollEvent);
-
+    window.addEventListener("resize", () => {
+      setMinScrollLength(calcMinScrollLength());
+    });
     return () => {
       window.removeEventListener("scroll", scrollEvent);
+      window.removeEventListener("resize", () => {
+        setMinScrollLength(calcMinScrollLength());
+      });
     };
   }, []);
 

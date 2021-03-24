@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "../../../axios";
 import "./Row.css";
 import Poster from "./Poster/Poster";
+import loadingSVG from "../../../Rolling-1s-200px.svg";
 
 function Row(props) {
   const mobileMoviePoster = useRef();
@@ -35,8 +36,7 @@ function Row(props) {
 
   const errorHandlerPotrait = (e) => {
     e.target.onerror = null;
-    e.target.src =
-      "https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg";
+    e.target.src = loadingSVG;
   };
 
   const sliceMovieDescription = (MovieDescription) => {
@@ -52,7 +52,6 @@ function Row(props) {
           MovieDescription.slice(0, maxCharacters).lastIndexOf(" ") + 1
         )}...`;
   };
-
   return (
     <div className="row">
       <h1>{props.title}</h1>
@@ -176,10 +175,10 @@ function Row(props) {
               movieProfileObject.trailerUrl
                 ? `https://www.youtube.com/embed/` +
                   movieProfileObject.trailerUrl +
-                  `?autoplay=1&mute=1&controls=0&playsinline=1`
+                  `?autoplay=1&mute=1&controls=0&playsinline=1&start=0&rel=0&modestbranding=1&disablekb=1`
                 : `https://www.youtube.com/embed/` +
                   "_vECE5BJbA0" +
-                  `?autoplay=1&mute=1&controls=0&playsinline=1`
+                  `?autoplay=1&mute=1&controls=0&playsinline=1&start=0&rel=0&modestbranding=1&disablekb=1`
             }
             frameBorder="0"
             allow="autoplay"
