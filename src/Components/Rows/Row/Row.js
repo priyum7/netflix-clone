@@ -82,19 +82,9 @@ function Row(props) {
                   movieProfileObject.original_name}
               </h1>
               <p className="overview">
-                {movieProfileObject.overview.length < maxCharacters
-                  ? movieProfileObject.overview
-                  : movieProfileObject.overview.search("\\.") > 0
-                  ? `${movieProfileObject.overview.slice(
-                      0,
-                      movieProfileObject.overview
-                        .slice(0, maxCharacters)
-                        .lastIndexOf(".") + 1
-                    )} `
-                  : `${movieProfileObject.overview.slice(
-                      0,
-                      maxCharacters
-                    )} ...`}
+                {"description" in movieProfileObject
+                  ? sliceMovieDescription(movieProfileObject.description)
+                  : sliceMovieDescription(movieProfileObject.overview)}
               </p>
             </div>
             <div className="media">
@@ -139,6 +129,7 @@ function Row(props) {
         }}
         onClick={() => {
           props.activeRowChangeHandler(null);
+          mobileMoviePoster.current.src = "";
         }}
       >
         <div
