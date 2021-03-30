@@ -2,20 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "../../../axios";
 import "./Row.css";
 import Poster from "./Poster/Poster";
-import loadingSVG from "../../../Rolling-1s-200px.svg";
 
 function Row(props) {
-  const mobileMoviePoster = useRef();
   const [movieList, setMovieList] = useState([]);
   const [movieProfileObject, setMovieProfileObject] = useState(false);
   const maxCharacters = 380;
   const baseImgUrl = "https://image.tmdb.org/t/p/original";
 
   const showMovieInfo = (tempMovieObject) => {
-    console.log(tempMovieObject);
-
     setMovieProfileObject(tempMovieObject);
     props.activeRowChangeHandler(props.title);
+    props.setCurrentMovieRows(tempMovieObject);
   };
 
   useEffect(() => {
@@ -34,12 +31,9 @@ function Row(props) {
       "https://variety.com/wp-content/uploads/2020/05/netflix-logo.png";
   };
 
-  const errorHandlerPotrait = (e) => {
-    e.target.onerror = null;
-    e.target.src = loadingSVG;
-  };
-
   const sliceMovieDescription = (MovieDescription) => {
+    if (MovieDescription.length == 0) return "Description Unavailable :(";
+
     return MovieDescription.length < maxCharacters
       ? MovieDescription
       : MovieDescription.search("\\.") < maxCharacters
@@ -52,6 +46,7 @@ function Row(props) {
           MovieDescription.slice(0, maxCharacters).lastIndexOf(" ") + 1
         )}...`;
   };
+
   return (
     <div className="row">
       <h1>{props.title}</h1>
@@ -97,7 +92,7 @@ function Row(props) {
                   src={
                     `https://www.youtube.com/embed/` +
                     movieProfileObject.trailerUrl +
-                    `?autoplay=1&mute=1&controls=0&loop=1`
+                    `?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1`
                   }
                   frameBorder="0"
                   allow="autoplay"
@@ -115,66 +110,6 @@ function Row(props) {
             </div>
           </>
         )}
-      </div>
-
-      <div
-        className="mobile_info"
-        style={{
-          transform:
-            props.currentActiveRow == props.title
-              ? "translateY(0vh)"
-              : "translateY(200vh)",
-          minHeight: "100vh",
-          height: "100%",
-        }}
-        onClick={() => {
-          props.activeRowChangeHandler(null);
-          mobileMoviePoster.current.src = "";
-        }}
-      >
-        <div
-          className="mobile_info_main"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <div className="mobile_description">
-            <img
-              src={`${baseImgUrl}${movieProfileObject.poster_path}`}
-              onError={errorHandlerPotrait}
-              style={{
-                maxHeight: "20vh",
-                boxSizing: "fill",
-              }}
-              ref={mobileMoviePoster}
-            />
-            {movieProfileObject && (
-              <p style={{ paddingLeft: "2vw", fontSize: "3.1vw" }}>
-                {"description" in movieProfileObject
-                  ? sliceMovieDescription(movieProfileObject.description)
-                  : sliceMovieDescription(movieProfileObject.overview)}
-              </p>
-            )}
-          </div>
-          <iframe
-            style={{
-              maxHeight: "26vh",
-              width: "100%",
-              height: "100%",
-            }}
-            src={
-              movieProfileObject.trailerUrl
-                ? `https://www.youtube.com/embed/` +
-                  movieProfileObject.trailerUrl +
-                  `?autoplay=1&mute=1&controls=0&playsinline=1&start=0&rel=0&modestbranding=1&disablekb=1`
-                : `https://www.youtube.com/embed/` +
-                  "_vECE5BJbA0" +
-                  `?autoplay=1&mute=1&controls=0&playsinline=1&start=0&rel=0&modestbranding=1&disablekb=1`
-            }
-            frameBorder="0"
-            allow="autoplay"
-          />
-        </div>
       </div>
     </div>
   );

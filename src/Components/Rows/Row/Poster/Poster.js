@@ -37,7 +37,6 @@ function Poster(props) {
     <div
       className="Poster"
       onClick={() => {
-        console.log(trailerUrl);
         props.showMovieInfoOnClick({
           ...props.movieObject,
           trailerUrl: trailerUrl,
