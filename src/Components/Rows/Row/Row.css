@@ -47,6 +47,7 @@
 .overview {
   margin-top: 2rem;
   font-size: 1.2rem;
+  overflow-y: scroll;
 }
 
 .media img {

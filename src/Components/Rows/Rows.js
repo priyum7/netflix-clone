@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import Row from "./Row/Row";
 import requestUrls from "../../requests";
-import loadingSVG from "../../Rolling-1s-200px.svg";
+import loadingSVG from "../../Rolling.svg";
 
 import "./Rows.css";
-import { MovieRounded } from "@material-ui/icons";
 
 function Rows() {
   const [activeRow, setActiveRow] = useState(null);
-  const [movieProfileObject, setMovieProfileObject] = useState();
-  const mobileMoviePoster = useRef();
-  const mobileMovieIframe = useRef();
+
+  const [moviePoster, setMoviePoster] = useState(null);
+  const [movieDesc, setMovieDesc] = useState(null);
+  const [movieTrailer, setMovieTrailer] = useState(null);
 
   const setCurrentActiveRow = (rowName) => {
     console.log("Active row :" + rowName);
@@ -18,27 +18,23 @@ function Rows() {
   };
 
   const setCurrentMovieRows = (tempMovieObject) => {
-    setMovieProfileObject(tempMovieObject);
+    setMoviePoster(tempMovieObject.poster_path);
+    setMovieDesc(
+      "description" in tempMovieObject
+        ? sliceMovieDescription(tempMovieObject.description)
+        : sliceMovieDescription(tempMovieObject.overview)
+    );
+    setMovieTrailer(tempMovieObject.trailerUrl);
   };
 
   const baseImgUrl = "https://image.tmdb.org/t/p/original";
 
-  const maxCharacters = 380;
+  const maxCharacters = 500;
 
   const sliceMovieDescription = (MovieDescription) => {
-    if (MovieDescription.length == 0) return "Description Unavailable :(";
-
-    return MovieDescription.length < maxCharacters
-      ? MovieDescription
-      : MovieDescription.search("\\.") < maxCharacters
-      ? `${MovieDescription.slice(
-          0,
-          MovieDescription.slice(0, maxCharacters).lastIndexOf(".") + 1
-        )} `
-      : `${MovieDescription.slice(
-          0,
-          MovieDescription.slice(0, maxCharacters).lastIndexOf(" ") + 1
-        )}...`;
+    return MovieDescription.length == 0
+      ? "Description Unavailable :("
+      : MovieDescription;
   };
 
   const errorHandlerPotrait = (e) => {
@@ -116,71 +112,82 @@ function Rows() {
           setCurrentMovieRows={setCurrentMovieRows}
         />
       </div>
-      {movieProfileObject && (
+
+      <div
+        className="mobile_info"
+        style={{
+          transform: activeRow ? "translateY(0vh)" : "translateY(100vh)",
+          minHeight: "100vh",
+          height: "100%",
+        }}
+        onClick={() => {
+          setActiveRow(null);
+          setMoviePoster(null);
+          setMovieDesc(null);
+          setMovieTrailer(null);
+        }}
+      >
         <div
-          className="mobile_info"
-          style={{
-            transform: activeRow ? "translateY(0vh)" : "translateY(200vh)",
-            minHeight: "100vh",
-            height: "100%",
-          }}
-          onClick={() => {
-            setActiveRow(null);
+          className="mobile_info_main"
+          onClick={(e) => {
+            e.stopPropagation();
           }}
         >
           <div
-            className="mobile_info_main"
-            onClick={(e) => {
-              e.stopPropagation();
+            id="mobile_description"
+            className="mobile_description"
+            style={{
+              minHeight: "20vh",
+              maxHeight: "20vh",
+              height: "100%",
             }}
           >
-            <div
-              className="mobile_description"
-              style={{ display: activeRow ? null : "none" }}
-            >
-              <img
-                src={`${baseImgUrl}${movieProfileObject.poster_path}`}
-                onError={errorHandlerPotrait}
-                style={{
-                  maxHeight: "20vh",
-                  boxSizing: "fill",
-                }}
-                ref={mobileMoviePoster}
-              />
-              {movieProfileObject && (
-                <p style={{ paddingLeft: "2vw", fontSize: "3.1vw" }}>
-                  {"description" in movieProfileObject
-                    ? sliceMovieDescription(movieProfileObject.description)
-                    : sliceMovieDescription(movieProfileObject.overview)}
-                </p>
-              )}
-            </div>
-            <iframe
+            <img
+              src={`${baseImgUrl}${moviePoster}`}
+              onError={errorHandlerPotrait}
               style={{
-                maxHeight: "26vh",
-                width: "100%",
                 height: "100%",
+                boxSizing: "fill",
+                backgroundImage: `url("${loadingSVG}")`,
+                backgroundSize: "contain",
               }}
-              ref={mobileMovieIframe}
-              src={
-                movieProfileObject.trailerUrl
-                  ? `https://www.youtube.com/embed/` +
-                    movieProfileObject.trailerUrl +
-                    `?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&${
-                      Math.random() * 1000000
-                    }`
-                  : `https://www.youtube.com/embed/` +
-                    "_vECE5BJbA0" +
-                    `?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&${
-                      Math.random() * 1000000
-                    }`
-              }
-              frameBorder="0"
-              allow="autoplay"
             />
+            <p
+              style={{
+                paddingLeft: "2vw",
+                width: "100%",
+                fontSize: "2vh",
+                overflowY: "scroll",
+              }}
+            >
+              {movieDesc}
+            </p>
           </div>
+          <iframe
+            style={{
+              display: activeRow ? null : "none",
+              maxHeight: "26vh",
+              width: "100%",
+              height: "100%",
+            }}
+            src={
+              movieTrailer
+                ? `https://www.youtube.com/embed/` +
+                  movieTrailer +
+                  `?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&${
+                    Math.random() * 1000000
+                  }`
+                : `https://www.youtube.com/embed/` +
+                  "_vECE5BJbA0" +
+                  `?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&${
+                    Math.random() * 1000000
+                  }`
+            }
+            frameBorder="0"
+            allow="autoplay"
+          />
         </div>
-      )}
+      </div>
     </>
   );
 }

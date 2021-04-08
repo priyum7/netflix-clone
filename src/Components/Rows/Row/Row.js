@@ -11,8 +11,8 @@ function Row(props) {
 
   const showMovieInfo = (tempMovieObject) => {
     setMovieProfileObject(tempMovieObject);
-    props.activeRowChangeHandler(props.title);
     props.setCurrentMovieRows(tempMovieObject);
+    props.activeRowChangeHandler(props.title);
   };
 
   useEffect(() => {
@@ -32,19 +32,9 @@ function Row(props) {
   };
 
   const sliceMovieDescription = (MovieDescription) => {
-    if (MovieDescription.length == 0) return "Description Unavailable :(";
-
-    return MovieDescription.length < maxCharacters
-      ? MovieDescription
-      : MovieDescription.search("\\.") < maxCharacters
-      ? `${MovieDescription.slice(
-          0,
-          MovieDescription.slice(0, maxCharacters).lastIndexOf(".") + 1
-        )} `
-      : `${MovieDescription.slice(
-          0,
-          MovieDescription.slice(0, maxCharacters).lastIndexOf(" ") + 1
-        )}...`;
+    return MovieDescription.length == 0
+      ? "Description Unavailable :("
+      : MovieDescription;
   };
 
   return (
