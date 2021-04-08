@@ -31,7 +31,6 @@
 .mobile_info_main .mobile_description {
   display: flex;
   padding: 2vh 4vw;
-  box-sizing: border-box;
   min-height: 24vh;
   max-height: 24vh;
 }

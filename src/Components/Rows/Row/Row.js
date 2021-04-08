@@ -11,8 +11,8 @@ function Row(props) {
 
   const showMovieInfo = (tempMovieObject) => {
     setMovieProfileObject(tempMovieObject);
-    props.activeRowChangeHandler(props.title);
     props.setCurrentMovieRows(tempMovieObject);
+    props.activeRowChangeHandler(props.title);
   };
 
   useEffect(() => {
