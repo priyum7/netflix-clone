@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const MongoClient = require("mongodb").MongoClient;
+const bcrypt = require("bcrypt");
 
 const app = express();
 var router = express.Router();
@@ -52,10 +53,39 @@ app.post("/checkUser", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
+    console.log(req.body.email);
+    console.log(req.body.password);
     const users = await db.collection("users").find({
       email,
     });
   } catch {}
+});
+
+app.post("/register", async (req, res) => {
+  try {
+    const result = await db.collection("users").insertOne(
+      {
+        email: req.body.email,
+        password: req.body.password,
+      },
+      (err) => {
+        if (err) {
+          res.status(400).send({
+            success: false,
+          });
+          console.error("SignUp Failed");
+        }
+        res.status(201).send({
+          success: true,
+        });
+      }
+    );
+  } catch (e) {
+    res.status(400).send({
+      success: false,
+    });
+    console.error("Unable to connect to server");
+  }
 });
 
 app.get("*", (req, res) => {
