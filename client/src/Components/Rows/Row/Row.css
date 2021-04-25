@@ -1,0 +1,63 @@
+.row {
+  margin-bottom: 10px;
+}
+
+.row_posters {
+  display: flex;
+  overflow-x: scroll;
+  z-index: 1;
+  overflow-y: hidden;
+  padding: 1.5vw 0px 0.5vw 0px;
+  box-sizing: border-box;
+}
+
+.row_posters::-webkit-scrollbar {
+  display: none;
+}
+
+.movie_info {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  height: 28vw;
+  justify-content: space-between;
+  transition: all 0.6s linear;
+}
+.description {
+  max-width: 40%;
+  padding-top: 20px;
+  padding-right: 80px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.description h1 {
+  font-size: 1.8rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.media {
+  width: 50%;
+  margin-right: 3vw;
+}
+
+.overview {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  overflow-y: scroll;
+}
+
+.media img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .movie_info {
+    display: none;
+  }
+}

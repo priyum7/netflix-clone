@@ -1,0 +1,12 @@
+.header {
+  width: 100vw;
+  height: 50.25vw;
+  background-size: cover;
+  max-width: 100%;
+}
+@media only screen and (max-width: 768px) {
+  .header {
+    height: 70vh;
+    background-size: 100% 100%;
+  }
+}
