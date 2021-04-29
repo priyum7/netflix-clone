@@ -27,3 +27,17 @@
   margin-top: 1px;
   font-size: min(1.3rem, 15px);
 }
+
+.login_errorDialog {
+  display: flex;
+  align-items: center;
+  background: #ffa00a;
+  width: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  border-radius: 1%;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}

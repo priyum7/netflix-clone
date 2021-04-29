@@ -53,38 +53,38 @@ app.post("/checkUser", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    console.log(req.body.email);
-    console.log(req.body.password);
-    const users = await db.collection("users").find({
-      email,
+    const user = await db.collection("users").findOne({
+      email: req.body.email,
     });
-  } catch {}
+
+    if (!user) {
+      res.status(200).send({ success: false });
+    } else {
+      const verified = await bcrypt.compare(req.body.password, user.password);
+      res.status(200).send({ success: verified });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(400).send(e);
+  }
 });
 
 app.post("/register", async (req, res) => {
   try {
-    const result = await db.collection("users").insertOne(
-      {
-        email: req.body.email,
-        password: req.body.password,
-      },
-      (err) => {
-        if (err) {
-          res.status(400).send({
-            success: false,
-          });
-          console.error("SignUp Failed");
-        }
-        res.status(201).send({
-          success: true,
-        });
-      }
-    );
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const result = await db.collection("users").insertOne({
+      email: req.body.email,
+      password: hashedPassword,
+    });
+    res.status(201).send({
+      success: true,
+    });
   } catch (e) {
     res.status(400).send({
       success: false,
     });
-    console.error("Unable to connect to server");
+    console.error(e);
   }
 });
 

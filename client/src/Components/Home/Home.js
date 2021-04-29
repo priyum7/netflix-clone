@@ -10,10 +10,11 @@ const Home = (props) => {
     if (email === "") {
       setError("Email is required.");
       return false;
-    } else if (email.search(/[A-Za-z]+@[A-Za-z]+.[A-Za-z]+/i)) {
+    } else if (email.search(/\w+@\w+.[A-Za-z]+/i)) {
       setError("Please enter a valid email address.");
       return false;
     } else {
+      setError("");
       return true;
     }
   };

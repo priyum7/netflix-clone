@@ -1,37 +1,40 @@
 import React, { useState } from "react";
 import Template from "../Home/Template";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../Login/Login.css";
+import WarningIcon from "@material-ui/icons/Warning";
 
 function Login() {
   const [emailError, setEmailError] = useState(undefined);
   const [passwordError, setPasswordError] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirectToApp, setRedirectToApp] = useState(false);
+  const [showError, setShowError] = useState(null);
 
   const checkEmail = () => {
-    if (email === "" || email.search(/[A-Za-z]+@[A-Za-z]+.[A-Za-z]+/i) === -1) {
+    if (email === "" || email.search(/\w+@\w+.[A-Za-z]+/i) === -1) {
       setEmailError("Please enter a valid email address.");
       return false;
     } else {
+      setEmailError("");
       return true;
     }
   };
 
   const checkPassword = () => {
-    if (password === "" || password.length < 4 || password.length > 60) {
+    if (password == "" || password.length < 4 || password.length > 60) {
       setPasswordError(
         "Your password must contain between 4 and 60 characters."
       );
       return false;
     } else {
+      setPasswordError("");
       return true;
     }
   };
 
   const userLogin = () => {
-    if (!checkEmail() && !checkPassword()) return;
-
     fetch("/login", {
       headers: {
         Accept: "application/json",
@@ -45,9 +48,17 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        if (res.success) setRedirectToApp(true);
+        else
+          setShowError({
+            errorType: "Invalid Credentials",
+          });
       });
   };
+
+  console.log(password);
+
+  if (redirectToApp) return <Redirect to="browse" />;
 
   return (
     <>
@@ -69,6 +80,18 @@ function Login() {
               paddingRight: "15%",
             }}
           >
+            {showError && (
+              <div className="login_errorDialog">
+                <WarningIcon
+                  style={{ fontSize: "2.8rem", paddingRight: "1rem" }}
+                />
+                {showError.errorType === "Invalid Credentials" ? (
+                  <div>
+                    <b> Enter valid email password</b>{" "}
+                  </div>
+                ) : null}
+              </div>
+            )}
             <span
               style={{
                 display: "block",
@@ -87,6 +110,7 @@ function Login() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              onBlur={checkEmail}
             />
             <span className="login_errorBox">{emailError}</span>
             <input
@@ -97,9 +121,15 @@ function Login() {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              onBlur={checkPassword}
             />
             <span className="login_errorBox">{passwordError}</span>
-            <button className="login_input btn" onClick={userLogin}>
+            <button
+              className="login_input btn"
+              onClick={() => {
+                if (checkEmail() & checkPassword()) userLogin();
+              }}
+            >
               Sign In
             </button>
             <div style={{ marginTop: "2vh", fontSize: "1.6rem" }}>

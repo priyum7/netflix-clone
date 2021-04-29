@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Template from "../Home/Template";
 import "./Register.css";
 import WarningIcon from "@material-ui/icons/Warning";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,38 +16,46 @@ function Register() {
     color: "",
   });
 
-  const [userExists, setUserExists] = useState(false);
+  const [showError, setShowError] = useState(null);
+  const [redirectToApp, setRedirectToApp] = useState(false);
 
   const checkEmail = () => {
-    if (email === "" || email.search(/[A-Za-z]+@[A-Za-z]+.[A-Za-z]+/i) === -1) {
+    if (email === "" || email.search(/\w+@\w+.[A-Za-z]+/i) === -1) {
       setEmailError({
         error: "Please enter a valid email address.",
         color: "#b92d2b",
       });
+      return false;
     } else {
       setEmailError({
         error: "",
         color: "green",
       });
+      return true;
     }
   };
 
   const checkPassword = () => {
-    if (password === "")
+    if (password === "") {
       setPasswordError({
         error: "Password is required.",
         color: "#b92d2b",
       });
-    else if (password.length < 4 || password.length > 60) {
-      setPasswordError({
-        error: "Password should be between 4 and 60 characters long.",
-        color: "#b92d2b",
-      });
+      return false;
+    } else if (password.length < 4 || password.length > 60) {
+      {
+        setPasswordError({
+          error: "Password should be between 4 and 60 characters long.",
+          color: "#b92d2b",
+        });
+        return false;
+      }
     } else {
       setPasswordError({
         error: "",
         color: "green",
       });
+      return true;
     }
   };
 
@@ -65,7 +73,9 @@ function Register() {
       .then((res) => res.json())
       .then((res) => {
         if (res.exists) {
-          setUserExists(true);
+          setShowError({
+            errorType: "User Exists",
+          });
         } else {
           fetch("/register/", {
             headers: {
@@ -79,7 +89,15 @@ function Register() {
             }),
           })
             .then((res) => res.json())
-            .then((res) => {})
+            .then((res) => {
+              if (res.success) {
+                setRedirectToApp(true);
+              } else {
+                setShowError({
+                  errorType: "Signup Failed",
+                });
+              }
+            })
             .catch((e) => {
               console.error(e);
             });
@@ -89,6 +107,8 @@ function Register() {
         console.error(e);
       });
   };
+
+  if (redirectToApp) return <Redirect to="/browse"></Redirect>;
 
   return (
     <>
@@ -106,20 +126,28 @@ function Register() {
             paddingRight: "2rem",
           }}
         >
-          {userExists && (
-            <div className="register_userExistsBox">
+          {showError && (
+            <div className="register_errorDialog">
               <WarningIcon
                 style={{ fontSize: "2.8rem", paddingRight: "1rem" }}
               />
-              <div>
-                <b>Looks like that account already exists.</b>{" "}
-                <Link to="/login">
-                  <span style={{ textDecoration: "underline" }}>
-                    Sign into that account
-                  </span>
-                </Link>{" "}
-                or try using a different email.
-              </div>
+              {showError.errorType === "User Exists" ? (
+                <div>
+                  <b>Looks like that account already exists.</b>{" "}
+                  <Link to="/login">
+                    <span style={{ textDecoration: "underline" }}>
+                      Sign into that account
+                    </span>
+                  </Link>{" "}
+                  or try using a different email.
+                </div>
+              ) : null}
+
+              {showError.errorType === "Signup Failed" ? (
+                <div>
+                  <b>An error occured. Please try again!</b>
+                </div>
+              ) : null}
             </div>
           )}
 
@@ -157,9 +185,7 @@ function Register() {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            onBlur={() => {
-              checkPassword();
-            }}
+            onBlur={checkPassword}
             style={{
               borderColor: passwordError.color,
             }}
@@ -169,8 +195,9 @@ function Register() {
           <button
             className="register_input btn"
             onClick={() => {
-              setUserExists(false);
-              if (!emailError.error && !passwordError.error) registerUser();
+              setShowError(null);
+
+              if (checkPassword() & checkEmail()) registerUser();
             }}
           >
             Sign Up

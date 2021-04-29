@@ -30,7 +30,7 @@
   font-size: min(1.3rem, 15px);
 }
 
-.register_userExistsBox {
+.register_errorDialog {
   display: flex;
   align-items: center;
   background: #ffa00a;

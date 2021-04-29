@@ -40,16 +40,18 @@ function Template(props) {
             <button
               style={{
                 fontSize: "1.7rem",
-                backgroundColor: "#e50914",
-                border: "1px solid #e50914",
+                backgroundColor: props.isRegister ? "#f3f3f3" : "#e50914",
+                border: "0px",
+                fontWeight: "600",
                 borderRadius: "0.2vw",
-                color: "white",
+                color: props.isRegister ? "#333" : "white",
 
                 height: "3.5rem",
                 position: "absolute",
                 right: "3vw",
                 top: "2rem",
                 width: "8rem",
+                cursor: "pointer",
               }}
             >
               Sign In
