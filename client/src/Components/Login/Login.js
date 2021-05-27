@@ -48,17 +48,17 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.success) setRedirectToApp(true);
-        else
+        if (res.success) {
+          console.log("checked");
+          setRedirectToApp(true);
+        } else
           setShowError({
             errorType: "Invalid Credentials",
           });
       });
   };
 
-  console.log(password);
-
-  if (redirectToApp) return <Redirect to="browse" />;
+  if (redirectToApp) return <Redirect to="/browse" />;
 
   return (
     <>

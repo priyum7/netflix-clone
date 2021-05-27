@@ -3,16 +3,32 @@ const express = require("express");
 const path = require("path");
 const MongoClient = require("mongodb").MongoClient;
 const bcrypt = require("bcrypt");
+const session = require("express-session");
+var MongoDBStore = require("connect-mongodb-session")(session);
 
 const app = express();
-var router = express.Router();
 
 const port = process.env.PORT || 5000;
 const uri = process.env.DB_URL;
+const secret = process.env.SECRET_KEY;
+
+const store = new MongoDBStore({
+  uri: uri,
+  databaseName: "notflix",
+  collection: "sessions",
+});
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 app.use(express.json());
-app.use(router);
+
+app.use(
+  session({
+    secret: secret,
+    store: store,
+    saveUninitialized: true,
+    resave: false,
+  })
+);
 
 let db;
 
@@ -31,6 +47,15 @@ MongoClient.connect(
     }
   }
 );
+
+app.get("/isLoggedIn", async (req, res) => {
+  res.status(200).send({
+    isAuthenticated:
+      "isAuthenticated" in req.session && req.session.isAuthenticated
+        ? true
+        : false,
+  });
+});
 
 app.post("/checkUser", async (req, res) => {
   try {
@@ -51,29 +76,44 @@ app.post("/checkUser", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
-  try {
-    const user = await db.collection("users").findOne({
-      email: req.body.email,
-    });
+const postLogin = (req, res, next) => {
+  req.session.isAuthenticated = true;
+  res.status(200).send({
+    success: req.success,
+    isAuthenticated:
+      "isAuthenticated" in req.session && req.session.isAuthenticated
+        ? true
+        : false,
+  });
+};
 
-    if (!user) {
-      res.status(200).send({ success: false });
-    } else {
-      const verified = await bcrypt.compare(req.body.password, user.password);
-      res.status(200).send({ success: verified });
+app.post(
+  "/login",
+  async (req, res, next) => {
+    try {
+      const user = await db.collection("users").findOne({
+        email: req.body.email,
+      });
+
+      if (!user) {
+        res.status(200).send({ success: false });
+      }
+
+      req.success = await bcrypt.compare(req.body.password, user.password);
+      next();
+    } catch (e) {
+      console.error(e);
+      res.status(400).send(e);
     }
-  } catch (e) {
-    console.error(e);
-    res.status(400).send(e);
-  }
-});
+  },
+  postLogin
+);
 
 app.post("/register", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    const result = await db.collection("users").insertOne({
+    await db.collection("users").insertOne({
       email: req.body.email,
       password: hashedPassword,
     });
@@ -81,10 +121,10 @@ app.post("/register", async (req, res) => {
       success: true,
     });
   } catch (e) {
+    console.error(e);
     res.status(400).send({
       success: false,
     });
-    console.error(e);
   }
 });
 

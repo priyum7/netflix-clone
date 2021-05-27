@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Template from "./Template";
 import { Redirect } from "react-router-dom";
 const Home = (props) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [userExists, setUserExists] = useState(undefined);
+  const [isLoggedIn, setIsLoggedIn] = useState(undefined);
+
+  useEffect(() => {
+    fetch("/isLoggedIn", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.isAuthenticated) setIsLoggedIn(true);
+        else setIsLoggedIn(false);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, []);
 
   const checkEmail = () => {
     if (email === "") {
@@ -44,6 +63,10 @@ const Home = (props) => {
         console.error(error);
       });
   };
+
+  if (isLoggedIn === undefined) return <></>;
+
+  if (isLoggedIn) return <Redirect to="/browse"></Redirect>;
 
   if (userExists === true) {
     return <Redirect to="/login" />;
@@ -97,7 +120,7 @@ const Home = (props) => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              placeholder="  Email address"
+              placeholder="Email address"
               style={{
                 flex: "6",
                 borderRadius: "0.2vw 0 0 0.2vw",
@@ -108,6 +131,7 @@ const Home = (props) => {
                 minHeight: "5rem",
                 height: "3rem",
                 fontSize: "1.2rem",
+                paddingLeft: "1rem",
               }}
             />
             <span
@@ -137,6 +161,7 @@ const Home = (props) => {
               height: "3rem",
               color: "white",
               fontSize: "1.7rem",
+              cursor: "pointer",
             }}
           >
             Get Started {">"}

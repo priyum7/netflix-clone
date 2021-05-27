@@ -108,7 +108,7 @@ function Register() {
       });
   };
 
-  if (redirectToApp) return <Redirect to="/browse"></Redirect>;
+  if (redirectToApp) return <Redirect to="/login"></Redirect>;
 
   return (
     <>
